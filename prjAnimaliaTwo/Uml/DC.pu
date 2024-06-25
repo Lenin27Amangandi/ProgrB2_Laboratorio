@@ -1,0 +1,132 @@
+@startuml
+
+package morthalClasificacion {
+    abstract class Animal {
+        -String nombre
+        +Animal()
+        +String getNombre()
+        +void setNombre(String nombre)
+    }
+
+    abstract class Anfibios extends Animal {
+    }
+
+    abstract class Ave extends Animal {
+        -int numeroAlas
+        +Ave()
+        +int getNumeroAlas()
+    }
+
+    abstract class Mamifero extends Animal {
+    }
+
+    abstract class Peces extends Animal {
+    }
+
+    abstract class Reptil extends Animal {
+    }
+}
+
+package morthalEcosistema {
+    class CorreCaminos extends Ave implements IAccion1 {
+        +CorreCaminos(String nombreCorrecaminos)
+        +void correr()
+        +String toString()
+    }
+
+    class Cuy extends Mamifero implements IHerbivoro {
+        +void comer(Hierva alimentoHierva)
+    }
+
+    class Halcon extends Ave implements IAccion2 {
+        +List<Pato> amigPatos
+        +Halcon(String nombreHalcon)
+        +void volar()
+        +String toString()
+    }
+
+    class Hierva {
+        -String nombreHierva
+        +Hierva()
+        +String getNombreHierva()
+        +String toString()
+    }
+
+    class Leon extends Mamifero implements IAccion1, ICarnivoro {
+        +Pato alimentoPatuno
+        +Leon(String nombre)
+        +void correr()
+        +void comer()
+        +void comer(Pato alimentoPatuno)
+        +void comer(Ave alimentoAvicola)
+        +String toString()
+    }
+
+    class LeonCuy extends Leon implements IHerbivoro {
+        +LeonCuy(String nombreLeonCuy)
+        +void comer(Pato alimentoPatuno)
+        +void comer()
+        +void comer(Hierva alimentoHierva)
+        +void comer(Ave alimentoAvicola)
+    }
+
+    class Pato extends Ave implements IAccion1, IAccion2, IAccion3 {
+        +Halcon amiHalcon
+        +Pato(String nombrePato)
+        +void correr()
+        +void volar()
+        +void nadar()
+        +String toString()
+    }
+}
+
+package morthalEcosistema.comportamiento {
+    interface IAccion1 {
+        +void correr()
+    }
+
+    interface IAccion2 {
+        +void volar()
+    }
+
+    interface IAccion3 {
+        +void nadar()
+    }
+
+    interface IHerbivoro {
+        +void comer(Hierva alimentoHierva)
+    }
+
+    interface ICarnivoro {
+        +void comer()
+        +void comer(Pato alimentoPatuno)
+        +void comer(Ave alimentoAvicola)
+    }
+}
+
+Animal <|-- Anfibios
+Animal <|-- Ave
+Animal <|-- Mamifero
+Animal <|-- Peces
+Animal <|-- Reptil
+
+Ave <|-- CorreCaminos
+Ave <|-- Halcon
+Ave <|-- Pato
+
+Mamifero <|-- Cuy
+Mamifero <|-- Leon
+Leon <|-- LeonCuy
+
+CorreCaminos ..> IAccion1
+Halcon ..> IAccion2
+Leon ..> IAccion1
+Leon ..> ICarnivoro
+LeonCuy ..> IHerbivoro
+Pato ..> IAccion1
+Pato ..> IAccion2
+Pato ..> IAccion3
+
+Cuy ..> IHerbivoro
+
+@enduml

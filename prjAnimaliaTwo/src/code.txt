@@ -1,0 +1,269 @@
+package morthalClasificacion;
+
+public abstract class Anfibios extends Animal {
+
+}
+package morthalClasificacion;
+
+public abstract class Animal {
+
+    private String nombre;
+
+    public Animal() {
+        nombre = "";
+
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre.toUpperCase();
+    }
+
+}
+package morthalClasificacion;
+
+public abstract class Ave extends Animal {
+
+    private int numeroAlas;
+
+    public Ave() {
+        numeroAlas = 2;
+    }
+
+    public int getNumeroAlas() {
+        return numeroAlas;
+    }
+
+    // public void setNumeroAlas(int numeroAlas) {
+    // this.numeroAlas = numeroAlas;
+    // }
+
+}
+package morthalClasificacion;
+
+public abstract class Mamifero extends Animal {
+
+}
+package morthalClasificacion;
+
+public abstract class Peces extends Animal{
+
+}
+package morthalClasificacion;
+
+public abstract class Reptil extends Animal {
+
+}
+package morthalEcosistema;
+
+import morthalClasificacion.Ave;
+import morthalEcosistema.comportamiento.IAccion1;
+
+public class CorreCaminos extends Ave implements IAccion1 {
+
+    // Aqui esmos colocando un nombre al correcaminos y este correcaminos le ponemos
+    // el metodo setNombre viene de la herencia el ave el cual hereda de animal.
+    public CorreCaminos(String nombreCorrecaminos) {
+        setNombre(nombreCorrecaminos);
+    }
+
+    @Override
+    public void correr() {
+        System.out.println("Correcamino is running ....");
+    }
+
+    @Override
+    public String toString() {
+        return    "\n Clase: " + getClass().getName()
+                + "\n Nombre: " + getNombre()
+                + "\n Nro Alas: " + getNumeroAlas();
+    }
+
+}
+package morthalEcosistema;
+
+import morthalClasificacion.Mamifero;
+import morthalEcosistema.comportamiento.IHerbivoro;
+
+public class Cuy extends Mamifero implements IHerbivoro {
+
+    @Override
+    public void comer(Hierva alimentoHierva) {
+
+        System.out.println("El cuy esta comiendo hierva: " + alimentoHierva.getNombreHierva());
+
+    }
+
+}
+package morthalEcosistema;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import morthalClasificacion.Ave;
+import morthalEcosistema.comportamiento.IAccion2;
+
+public class Halcon extends Ave implements IAccion2 {
+    // Con esto cumplimos la sociciacion y le inicializamos
+    // Primera Forma
+    // public List<Pato> amigoPatos = new ArrayList<Pato>();
+
+    // Segunda Forma
+    public List<Pato> amigPatos;
+
+    public Halcon(String nombreHalcon) {
+        amigPatos = new ArrayList<Pato>();
+        setNombre(nombreHalcon);
+    }
+
+    @Override
+    public void volar() {
+        System.out.println("El Halcon esta volando ....");
+    }
+
+    @Override
+    public String toString() {
+        return "\n Clase: " + getClass().getName()
+                + "\n Nombre: " + getNombre()
+                + "\n Nro Alas: " + getNumeroAlas();
+    }
+
+}
+package morthalEcosistema;
+
+public class Hierva {
+
+    private String nombreHierva;
+
+    public Hierva() {
+        nombreHierva = "Alfalfa";
+    }
+
+    public String getNombreHierva() {
+        return nombreHierva.toLowerCase();
+    }
+
+    @Override
+    public String toString() {
+        return "\n Clase: " + getClass().getName()
+                + "\n Nombre: " + getNombreHierva();
+    }
+}
+package morthalEcosistema;
+
+import morthalClasificacion.Ave;
+import morthalClasificacion.Mamifero;
+import morthalEcosistema.comportamiento.IAccion1;
+import morthalEcosistema.comportamiento.ICarnivoro;
+
+public class Leon extends Mamifero implements IAccion1, ICarnivoro {
+    public Pato alimentoPatuno;
+
+    public Leon(String nombre) {
+        setNombre(nombre);
+        alimentoPatuno = new Pato("Drux");
+    }
+
+    @Override
+    public void correr() {
+        System.out.println("Leon esta corriendo ");
+    }
+
+    @Override
+    public void comer() {
+        System.out.println("Leon esta comiendo hambre ... ");
+    }
+
+    @Override
+    public void comer(Pato alimentoPatuno) {
+        System.out.println("Leon esta comiendo un pato:  " + alimentoPatuno.toString());
+    }
+
+    @Override
+    public void comer(Ave alimentoAvicola) {
+        System.out.println("LeonCuy come Ave: " + alimentoAvicola.getNombre());
+    }
+
+    @Override
+    public String toString() {
+        return "\n Clase: " + getClass().getName()
+                + "\n Nombre: " + getNombre();
+    }
+
+}
+package morthalEcosistema;
+
+import morthalClasificacion.Ave;
+import morthalEcosistema.comportamiento.IHerbivoro;
+
+public class LeonCuy extends Leon implements IHerbivoro {
+
+    public LeonCuy(String nombreLeonCuy) {
+        super("Leon");
+        setNombre(nombreLeonCuy);
+    }
+
+    @Override
+    public void comer(Pato alimentoPatuno) {
+        System.out.println("LeonCuy come: " + alimentoPatuno.getNombre());
+    }
+
+    @Override
+    public void comer() {
+        System.out.println("Leon Cuy come hambre ");
+    }
+
+    @Override
+    public void comer(Hierva alimentoHierva) {
+        System.out.println("LeonCuy come: " + alimentoHierva.getNombreHierva());
+    }
+
+    @Override
+    public void comer(Ave alimentoAvicola) {
+        System.out.println("LeonCuy come Ave: " + alimentoAvicola.getNombre());
+
+    }
+
+}
+package morthalEcosistema;
+
+import morthalClasificacion.Ave;
+import morthalEcosistema.comportamiento.IAccion1;
+import morthalEcosistema.comportamiento.IAccion2;
+import morthalEcosistema.comportamiento.IAccion3;
+
+public class Pato extends Ave implements IAccion1, IAccion2, IAccion3 {
+
+    public Halcon amiHalcon;
+
+    public Pato(String nombrePato) {
+        setNombre(nombrePato);
+        amiHalcon = new Halcon("Firon");
+    }
+
+    @Override
+    public void correr() {
+        System.out.println("Pato esta corriendo ...");
+    }
+
+    @Override
+    public void volar() {
+        System.out.println("Pato esta volando ...");
+    }
+
+    @Override
+    public void nadar() {
+        System.out.println("Pato esta nadando ...");
+    }
+
+    @Override
+    public String toString() {
+        return "\n Clase: " + getClass().getName()
+                + "\n Nombre: " + getNombre()
+                + "\n Nro Alas: " + getNumeroAlas();
+    }
+
+}
